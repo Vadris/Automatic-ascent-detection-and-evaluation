@@ -1,8 +1,9 @@
 package myMath;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
-import org.python.antlr.ast.Continue;
+import org.python.antlr.PythonParser.return_stmt_return;
 
 public class LagrangePolynomial {
     private double[] xNodes;
@@ -13,7 +14,7 @@ public class LagrangePolynomial {
         this.yNodes = yNodes;
     }
 
-    public LagrangePolynomial(ArrayList<GraphPoint> dataPoints){
+    public LagrangePolynomial(ArrayList<DataPoint2D> dataPoints){
         xNodes = new double[dataPoints.size()];
         yNodes = new double[dataPoints.size()];
         for(int i = 0; i < dataPoints.size(); i++){
@@ -26,6 +27,61 @@ public class LagrangePolynomial {
         return xNodes.length - 1;
     }
 
+    public double denominator(int i){
+        double result = 1;
+        double x_i = xNodes[i];
+        for(int j = xNodes.length - 1; j >= 0; j--){
+            if(i != j){
+                result *= x_i - xNodes[j];
+            }
+        }
+        return result;
+    }
+
+    public double[] interpolationPolynomial(int i){
+        double[] coeffecients = new double[xNodes.length];
+        coeffecients[0] = 1/denominator(i);
+        double[] newCoeffecients;
+        for(int k = 0; k < xNodes.length; k++){
+            if(k == i) continue;
+            newCoeffecients = new double[xNodes.length];
+            for(int j = (k < i) ? (k) : k - 1; j >= 0; j--){
+                newCoeffecients[j+1] += coeffecients[j];
+                newCoeffecients[j] -= xNodes[k]*coeffecients[j];
+            }
+            coeffecients = Arrays.copyOf(newCoeffecients, newCoeffecients.length);
+        }
+        return coeffecients;
+    }
+
+    public double[] calculateCoeefecients(){
+        double[] polynomial = new double[xNodes.length];
+        double[] coeffecients;
+        for(int i = 0; i < xNodes.length; ++i){
+            coeffecients = interpolationPolynomial(i);
+            for(int k = 0; k < xNodes.length; ++k){
+                polynomial[k] += yNodes[i]*coeffecients[k];
+            }
+        }
+        for(int i = polynomial.length - 1; i >= 0; i--){
+            polynomial[i] = round(polynomial[i], 3);
+            System.out.println(polynomial[i] + "*x^" + i);
+        }
+        return polynomial;
+    }
+
+
+    //TODO: Move funciton to proper class
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+    
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        return (double) tmp / factor;
+    }
+
+
     public double eval(double x){
         double sum = 0;
         for(int i = 0; i <= getDegree(); i++){
@@ -34,16 +90,8 @@ public class LagrangePolynomial {
         }
         return sum;
     }
-    public double[] getCoeffecients(){
-        double[] coeffecients = new double[xNodes.length];
-        for(int i = 0; i < getDegree(); i++){
-            for(int j = 0; j < getDegree(); j++){
-                coeffecients[j] += yNodes[i] * xNodes[j];
-            }
-        }
-        return coeffecients;
-    }
-
+    
+    /**
     public double evalFirstDErivative(double x){
         double sum = 0;
         for(int i = 0; i <= getDegree(); i++){
@@ -80,6 +128,7 @@ public class LagrangePolynomial {
         }
         return sum;
     }
+    **/
 
     private double lProduct(int i, double x){
         double mul = 1;
@@ -91,6 +140,7 @@ public class LagrangePolynomial {
         return mul;
     }
 
+    /**
     public double findZeroNewton(double initialGuess){
         double precision = 1.001;
 
@@ -108,5 +158,6 @@ public class LagrangePolynomial {
         }
         return xnew;
     }
+    **/
     
 }

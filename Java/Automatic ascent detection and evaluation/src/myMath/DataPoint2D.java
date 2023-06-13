@@ -2,11 +2,11 @@ package myMath;
 
 import java.util.ArrayList;
 
-public class GraphPoint {
+public class DataPoint2D {
     private double xValue;
     private double yValue;
 
-    public GraphPoint(double xValue, double yValue){
+    public DataPoint2D(double xValue, double yValue){
         this.xValue = xValue;
         this.yValue = yValue;
     }
@@ -21,7 +21,7 @@ public class GraphPoint {
     public String toString(){
         return xValue + "," + yValue;
     }
-    public static String convertPointListToCSV(ArrayList<GraphPoint> dataPoints){
+    public static String convertPointListToCSV(ArrayList<DataPoint2D> dataPoints){
         StringBuilder csv = new StringBuilder();
         for(int i = 0; i < dataPoints.size(); i++){
             csv.append(dataPoints.get(i).getxValue()).append(",").append(dataPoints.get(i).getyValue()).append(";\n");

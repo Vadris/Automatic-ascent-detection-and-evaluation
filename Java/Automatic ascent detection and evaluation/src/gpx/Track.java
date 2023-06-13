@@ -2,7 +2,7 @@ package gpx;
 
 import java.util.ArrayList;
 
-import myMath.GraphPoint;
+import myMath.DataPoint2D;
 /**
  * Represents a GPX Track as a list of track segments
  * @author Fynn Jansen
@@ -61,8 +61,8 @@ public class Track {
         }
         return totalDistance;
     }
-    public ArrayList<GraphPoint> generateDistanceVsHeightValues(){
-        ArrayList<GraphPoint> dataPoints = new ArrayList<>();
+    public ArrayList<DataPoint2D> generateDistanceVsHeightValues(){
+        ArrayList<DataPoint2D> dataPoints = new ArrayList<>();
         for(int i = 0; i < trackSegments.size(); i++){
             dataPoints.addAll(trackSegments.get(i).generateDistanceVsHeightValues());
         }

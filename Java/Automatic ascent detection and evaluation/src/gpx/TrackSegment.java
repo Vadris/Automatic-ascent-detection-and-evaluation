@@ -2,7 +2,7 @@ package gpx;
 
 import java.util.ArrayList;
 
-import myMath.GraphPoint;
+import myMath.DataPoint2D;
 /**
  * Represents a GPX tracksegment as a list of coordinates in polar form
  * @author Fynn Jansen
@@ -51,11 +51,11 @@ public class TrackSegment {
         }
         return totalDistance;
     }
-    public ArrayList<GraphPoint> generateDistanceVsHeightValues(){
-        ArrayList<GraphPoint> dataPoints = new ArrayList<>();
+    public ArrayList<DataPoint2D> generateDistanceVsHeightValues(){
+        ArrayList<DataPoint2D> dataPoints = new ArrayList<>();
         double distance = 0;
         for(int i = 0; i < trackPoints.size() - 1; i++){
-            dataPoints.add(new GraphPoint(distance, trackPoints.get(i).getElevation()));
+            dataPoints.add(new DataPoint2D(distance, trackPoints.get(i).getElevation()));
             distance += trackPoints.get(i).calculateDistanceTo(trackPoints.get(i + 1));
         }
         return dataPoints;
