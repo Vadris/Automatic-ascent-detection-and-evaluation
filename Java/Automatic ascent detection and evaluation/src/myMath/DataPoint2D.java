@@ -17,6 +17,12 @@ public class DataPoint2D {
     public double getyValue() {
         return yValue;
     }
+    public void setxValue(double xValue) {
+        this.xValue = xValue;
+    }
+    public void setyValue(double yValue) {
+        this.yValue = yValue;
+    }
     @Override
     public String toString(){
         return xValue + "," + yValue;
