@@ -20,13 +20,13 @@ import gpx.TrackPoint;
 import gpx.TrackSegment;
 
 public class GpxParser {
-    public static GpxData parse(File input) throws GpxParseException{
+    public static GpxData parse(String string) throws GpxParseException{
         GpxData data = new GpxData();
         
         SAXBuilder parser = new SAXBuilder();
         Document gpxDocument;
         try{
-            gpxDocument = parser.build(input);
+            gpxDocument = parser.build(string);
         }catch(IOException ioException){
             throw new GpxParseException("Failed to parse gpx file.\n" + ioException.getMessage());
         }catch(JDOMException jdomException){
@@ -35,13 +35,6 @@ public class GpxParser {
 
         Element rootNode = gpxDocument.getRootElement();
         Namespace documentNamespace = rootNode.getNamespace();
-
-        //TODO: Parse Date & Time
-        String[] timeDateMetaData = rootNode.getChildText("time", documentNamespace).split("T");
-        String[] date = timeDateMetaData[0].split("-");
-        String[] time = timeDateMetaData[1].split(":");
-        data.setDate(LocalDate.of(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2])));
-        data.setTime(LocalTime.of(Integer.parseInt(time[0]), Integer.parseInt(time[1])));
 
         List<Element> trackNodes = rootNode.getChildren("trk", documentNamespace);
         for(int i = 0; i < trackNodes.size(); i++){

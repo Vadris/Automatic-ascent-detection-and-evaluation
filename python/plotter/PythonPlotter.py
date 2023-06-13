@@ -23,8 +23,8 @@ def show_graph(Distance,Elevation,graphcolor='blue'):
     ax.set_xlabel('Distance')
     ax.set_ylabel('Elevation')
 
-filepath1 = 'python/plotter/smoothedData1.csv'
-filepath2 = 'python/plotter/test-height-data1-fixed.csv'
+filepath1 = 'python/plotter/smoothedData4-anders3.csv'
+filepath2 = 'python/plotter/smoothedData4-anders2.csv'
 Distance1,Elevation1 = readin_heightprofile_from_csv(filepath1)
 Distance2,Elevation2 = readin_heightprofile_from_csv(filepath2)
 show_graph(Distance1,Elevation1)

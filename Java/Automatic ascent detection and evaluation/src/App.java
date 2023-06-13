@@ -10,9 +10,10 @@ import myMath.Polynomial;
 
 public class App {
     public static void main(String[] args) throws Exception, GpxParseException {
-        GpxData testData = GpxParser.parse(new File("/home/fynn/Documents/CAMMP Week Java/data/TourDeFrance2022/stage-2-parcours.gpx"));
+        GpxData testData = GpxParser.parse("/home/fynn/Documents/CAMMP Week Java/data/TourDeFrance2022/stage-4-parcours.gpx");
         ElevationProfile profile = new ElevationProfile(testData.getTrack(0).generateDistanceVsHeightValues());
-        profile.smooth(20);
-        CSVSaver.saveFile(profile.toCSV(), "/home/fynn/Documents/Automatic ascent detection and evaluation/Automatic-ascent-detection-and-evaluation/data/csv", "smoothedData1.csv");
+        profile.smooth(200);
+        CSVSaver.saveFile(profile.toCSV(), "/home/fynn/Documents/Automatic ascent detection and evaluation/Automatic-ascent-detection-and-evaluation/data/csv", 
+        "smoothedData4-anders3.csv");
     }
 }

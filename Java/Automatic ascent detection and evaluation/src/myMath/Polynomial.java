@@ -2,8 +2,6 @@ package myMath;
 
 import java.util.Arrays;
 
-import org.python.antlr.PythonParser.return_stmt_return;
-
 public class Polynomial {
     private double[] coeffecients;
 
@@ -102,8 +100,7 @@ public class Polynomial {
         int i = 0;
         while(true){
             xnew = (xold - (this.eval(xold)/(derivative.eval(xold))));
-            if(Math.abs(xnew/xold) <=precision + 1 && xnew>xold) break;
-            if(Math.abs(xold/xnew) <= precision + 1 && xold>xnew) break;
+            if(Math.abs(xnew - xold) <= precision + 1) break;
             xold = xnew;
             i++;
         }
