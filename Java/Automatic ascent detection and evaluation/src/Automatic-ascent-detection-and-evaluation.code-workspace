@@ -1,16 +1,14 @@
 {
-	"folders": [
-		{
-			"path": "../../.."
-		},
-		{
-			"path": "../../../../../CAMMP Week Java/data"
-		}
-	],
-	"settings": {
-		"java.project.referencedLibraries": [
-			"lib/**/*.jar",
-			"Java/Automatic ascent detection and evaluation/lib/jdom.jar"
-		]
-	}
+    "folders": [
+        {
+            "path": "../../.."
+        }
+    ],
+    "settings": {
+        "java.project.referencedLibraries": [
+            "lib/**/*.jar",
+            "Java/Automatic ascent detection and evaluation/lib/jython-standalone-2.7.3.jar",
+            "Java/Automatic ascent detection and evaluation/lib/jdom.jar"
+        ]
+    }
 }
