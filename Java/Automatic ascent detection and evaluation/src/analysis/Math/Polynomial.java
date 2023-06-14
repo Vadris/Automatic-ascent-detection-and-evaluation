@@ -1,4 +1,4 @@
-package myMath;
+package analysis.Math;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,7 +22,7 @@ public class Polynomial {
      *
      * @param interpolationData The interpolation data points.
      */
-    public Polynomial(DataPoint2D[] interpolationData) {
+    public Polynomial(DataPoint[] interpolationData) {
         coefficients = calculateCoefficients(interpolationData);
     }
 
@@ -32,8 +32,8 @@ public class Polynomial {
      *
      * @param interpolationData The interpolation data points.
      */
-    public Polynomial(ArrayList<DataPoint2D> interpolationData) {
-        DataPoint2D[] interpolationDataArray = new DataPoint2D[interpolationData.size()];
+    public Polynomial(ArrayList<DataPoint> interpolationData) {
+        DataPoint[] interpolationDataArray = new DataPoint[interpolationData.size()];
         for (int i = 0; i < interpolationData.size(); i++) {
             interpolationDataArray[i] = interpolationData.get(i);
         }
@@ -46,7 +46,7 @@ public class Polynomial {
      * @param x The x value to evaluate.
      * @return The result of evaluating the polynomial.
      */
-    public double eval(double x) {
+    public double evaluateAt(double x) {
         double result = 0;
         for (int i = 0; i < coefficients.length; i++) {
             result += coefficients[i] * Math.pow(x, i);
@@ -98,14 +98,14 @@ public class Polynomial {
      * @param interpolationData The interpolation data points.
      * @return The denominator value.
      */
-    private double denominator(int i, DataPoint2D[] interpolationData) {
+    private double denominator(int i, DataPoint[] interpolationData) {
         // The denominator represents the product of differences between the x values
         // of the interpolation data points, excluding the current point.
         double result = 1;
-        double x_i = interpolationData[i].getxValue();
+        double x_i = interpolationData[i].getX();
         for (int j = interpolationData.length - 1; j >= 0; j--) {
             if (i != j) {
-                result *= x_i - interpolationData[j].getxValue();
+                result *= x_i - interpolationData[j].getX();
             }
         }
         return result;
@@ -118,7 +118,7 @@ public class Polynomial {
      * @param interpolationData The interpolation data points.
      * @return The coefficients of the interpolation polynomial.
      */
-    private double[] interpolationPolynomial(int i, DataPoint2D[] interpolationData) {
+    private double[] interpolationPolynomial(int i, DataPoint[] interpolationData) {
         // The interpolation polynomial is calculated by applying Lagrange interpolation.
         // Each term of the polynomial is determined by dividing 1 by the denominator,
         // which is the product of differences between the x values of the interpolation data points.
@@ -132,7 +132,7 @@ public class Polynomial {
             newCoefficients = new double[interpolationData.length];
             for (int j = (k < i) ? (k) : k - 1; j >= 0; j--) {
                 newCoefficients[j + 1] += coefficients[j];
-                newCoefficients[j] -= interpolationData[k].getxValue() * coefficients[j];
+                newCoefficients[j] -= interpolationData[k].getX() * coefficients[j];
             }
             coefficients = Arrays.copyOf(newCoefficients, newCoefficients.length);
         }
@@ -145,7 +145,7 @@ public class Polynomial {
      * @param interpolationData The interpolation data points.
      * @return The coefficients of the polynomial.
      */
-    private double[] calculateCoefficients(DataPoint2D[] interpolationData) {
+    private double[] calculateCoefficients(DataPoint[] interpolationData) {
         // The coefficients of the polynomial are calculated by applying interpolation
         // for each interpolation data point and summing the results weighted by the y values.
         double[] polynomial = new double[interpolationData.length];
@@ -153,7 +153,7 @@ public class Polynomial {
         for (int i = 0; i < interpolationData.length; ++i) {
             coefficients = interpolationPolynomial(i, interpolationData);
             for (int k = 0; k < interpolationData.length; ++k) {
-                polynomial[k] += interpolationData[i].getyValue() * coefficients[k];
+                polynomial[k] += interpolationData[i].getY() * coefficients[k];
             }
         }
         // Optional rounding of coefficients and printing for debugging purposes
@@ -194,7 +194,7 @@ public class Polynomial {
         Polynomial derivative = calculateDerivative();
         int i = 0;
         while (true) {
-            xNew = xOld - (this.eval(xOld) / (derivative.eval(xOld)));
+            xNew = xOld - (this.evaluateAt(xOld) / (derivative.evaluateAt(xOld)));
             if (Math.abs(xNew - xOld) <= precision + 1) {
                 break;
             }
@@ -215,7 +215,7 @@ public class Polynomial {
     public String toCSV(double start, double end, double step) {
         StringBuilder csv = new StringBuilder();
         for (double current = start; current <= end; current += step) {
-            csv.append(current).append(",").append(eval(current)).append(";\n");
+            csv.append(current).append(",").append(evaluateAt(current)).append(";\n");
         }
         return csv.toString();
     }

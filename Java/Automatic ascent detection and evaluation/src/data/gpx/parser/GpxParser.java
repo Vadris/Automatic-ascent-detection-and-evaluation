@@ -1,4 +1,4 @@
-package gpx.parser;
+package data.gpx.parser;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,10 +14,10 @@ import org.jdom.JDOMException;
 import org.jdom.Namespace;
 import org.jdom.input.SAXBuilder;
 
-import gpx.GpxData;
-import gpx.Track;
-import gpx.TrackPoint;
-import gpx.TrackSegment;
+import data.gpx.GpxData;
+import data.gpx.Track;
+import data.gpx.TrackPoint;
+import data.gpx.TrackSegment;
 
 
 /**

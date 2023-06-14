@@ -1,4 +1,4 @@
-package gpx.parser;
+package data.gpx.parser;
 
 /**
  * Exception class for handling errors that occur during GPX parsing.

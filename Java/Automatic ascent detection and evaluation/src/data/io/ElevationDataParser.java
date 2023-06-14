@@ -1,7 +1,4 @@
-package csv;
-
-import myMath.DataPoint2D;
-import myMath.ElevationProfile;
+package data.io;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,7 +6,10 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CsvParser {
+import analysis.Math.DataPoint;
+import analysis.Math.ElevationProfile;
+
+public class ElevationDataParser {
     /**
      * Parses a CSV file containing elevation data and constructs an elevation profile.
      *
@@ -17,15 +17,15 @@ public class CsvParser {
      * @return The elevation profile constructed from the CSV data.
      * @throws IOException If an I/O error occurs while reading the CSV file.
      */
-    public static ElevationProfile parseCsv(String path) throws IOException {
+    public static ElevationProfile parseCsvToElevationProfile(String path) throws IOException {
         List<String> lines = Files.readAllLines(Path.of(path));
-        ArrayList<DataPoint2D> data = new ArrayList<>();
+        ArrayList<DataPoint> data = new ArrayList<>();
 
         for (String line : lines) {
             String[] values = line.split(",");
             double x = Double.parseDouble(values[0]);
             double y = Double.parseDouble(values[1].replace(";", ""));
-            data.add(new DataPoint2D(x, y));
+            data.add(new DataPoint(x, y));
         }
 
         return new ElevationProfile(data);

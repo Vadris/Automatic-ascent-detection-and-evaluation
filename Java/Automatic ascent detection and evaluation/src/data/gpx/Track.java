@@ -1,8 +1,8 @@
-package gpx;
+package data.gpx;
 
 import java.util.ArrayList;
 
-import myMath.DataPoint2D;
+import analysis.Math.DataPoint;
 
 /**
  * Represents a GPX Track as a collection of track segments.
@@ -86,8 +86,8 @@ public class Track {
      * 
      * @return An ArrayList of DataPoint2D objects representing the distance vs. height values.
      */
-    public ArrayList<DataPoint2D> generateDistanceVsHeightValues() {
-        ArrayList<DataPoint2D> dataPoints = new ArrayList<>();
+    public ArrayList<DataPoint> generateDistanceVsHeightValues() {
+        ArrayList<DataPoint> dataPoints = new ArrayList<>();
         for (int i = 0; i < trackSegments.size(); i++) {
             dataPoints.addAll(trackSegments.get(i).generateDistanceVsHeightValues());
         }

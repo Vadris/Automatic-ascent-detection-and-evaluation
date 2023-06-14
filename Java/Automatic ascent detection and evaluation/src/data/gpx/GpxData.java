@@ -1,4 +1,4 @@
-package gpx;
+package data.gpx;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

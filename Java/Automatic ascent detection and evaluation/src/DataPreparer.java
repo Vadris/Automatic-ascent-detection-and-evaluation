@@ -1,12 +1,12 @@
 import java.io.IOException;
 
-import csv.CSVSaver;
-import csv.CsvParser;
-import gpx.GpxData;
-import gpx.parser.GpxParseException;
-import gpx.parser.GpxParser;
-import myMath.DataPoint2D;
-import myMath.ElevationProfile;
+import analysis.Math.DataPoint;
+import analysis.Math.ElevationProfile;
+import data.gpx.GpxData;
+import data.gpx.parser.GpxParseException;
+import data.gpx.parser.GpxParser;
+import data.io.CSVFileWriter;
+import data.io.ElevationDataParser;
 
 public class DataPreparer {
     /**
@@ -36,9 +36,9 @@ public class DataPreparer {
             // Parse GPX data from the file
             GpxData data = GpxParser.parse("/home/fynn/Documents/Automatic ascent detection and evaluation/Automatic-ascent-detection-and-evaluation/data/TourDeFrance2022/stage-" + i + "-parcours.gpx");
             // Convert track data to CSV format
-            String csvData = DataPoint2D.convertPointListToCSV(data.getTrack(0).generateDistanceVsHeightValues());
+            String csvData = DataPoint.convertPointListToCSV(data.getTrack(0).generateDistanceVsHeightValues());
             // Save the CSV data to a file
-            CSVSaver.saveFile(csvData, "/home/fynn/Documents/Automatic ascent detection and evaluation/Automatic-ascent-detection-and-evaluation/data/csv/raw", "raw" + i + ".csv");
+            CSVFileWriter.saveDataToCsvFile(csvData, "/home/fynn/Documents/Automatic ascent detection and evaluation/Automatic-ascent-detection-and-evaluation/data/csv/raw", "raw" + i + ".csv");
         
             totalDistance += data.getTrack(0).calculateTotalDistance();
         }
@@ -53,9 +53,10 @@ public class DataPreparer {
      */
     public static void smoothRawData() throws IOException {
         for(int i = 1; i <= 21; i++){
-            ElevationProfile profile = CsvParser.parseCsv("/home/fynn/Documents/Automatic ascent detection and evaluation/Automatic-ascent-detection-and-evaluation/data/csv/raw/raw" + i + ".csv");
-            profile.smooth(200);
-            CSVSaver.saveFile(profile.toCSV(), "/home/fynn/Documents/Automatic ascent detection and evaluation/Automatic-ascent-detection-and-evaluation/data/csv/smoothed", "smoothed" + i + ".csv");
+            ElevationProfile profile = ElevationDataParser.parseCsvToElevationProfile("/home/fynn/Documents/Automatic ascent detection and evaluation/Automatic-ascent-detection-and-evaluation/data/csv/raw/raw" + i + ".csv");
+            profile.smooth(50, 1.5);
+            profile.smooth(10, 1.7);
+            CSVFileWriter.saveDataToCsvFile(profile.toCSV(), "/home/fynn/Documents/Automatic ascent detection and evaluation/Automatic-ascent-detection-and-evaluation/data/csv/smoothed", "smoothed-v2-" + i + ".csv");
         }
     }
 }

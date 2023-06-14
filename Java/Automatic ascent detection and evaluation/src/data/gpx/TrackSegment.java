@@ -1,8 +1,8 @@
-package gpx;
+package data.gpx;
 
 import java.util.ArrayList;
 
-import myMath.DataPoint2D;
+import analysis.Math.DataPoint;
 
 /**
  * Represents a GPX track segment as a list of coordinates in polar form.
@@ -76,11 +76,11 @@ public class TrackSegment {
      * 
      * @return An ArrayList of DataPoint2D objects representing the distance vs. height values.
      */
-    public ArrayList<DataPoint2D> generateDistanceVsHeightValues() {
-        ArrayList<DataPoint2D> dataPoints = new ArrayList<>();
+    public ArrayList<DataPoint> generateDistanceVsHeightValues() {
+        ArrayList<DataPoint> dataPoints = new ArrayList<>();
         double distance = 0;
         for (int i = 0; i < trackPoints.size() - 1; i++) {
-            dataPoints.add(new DataPoint2D(distance, trackPoints.get(i).getElevation()));
+            dataPoints.add(new DataPoint(distance, trackPoints.get(i).getElevation()));
             distance += trackPoints.get(i).calculateDistanceTo(trackPoints.get(i + 1));
         }
         return dataPoints;

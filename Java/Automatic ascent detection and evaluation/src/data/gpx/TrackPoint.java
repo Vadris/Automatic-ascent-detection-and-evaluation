@@ -1,4 +1,4 @@
-package gpx;
+package data.gpx;
 
 /**
  * Represents a point on the recorded track in polar coordinates.

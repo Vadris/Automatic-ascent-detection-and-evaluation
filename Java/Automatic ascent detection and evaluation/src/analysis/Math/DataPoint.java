@@ -1,4 +1,4 @@
-package myMath;
+package analysis.Math;
 
 import java.util.ArrayList;
 
@@ -12,19 +12,19 @@ import java.util.ArrayList;
  * <p>Version: 1.0</p>
  * <p>Author: [Your Name]</p>
  */
-public class DataPoint2D {
-    private double xValue;
-    private double yValue;
+public class DataPoint {
+    private double x;
+    private double y;
 
     /**
      * Constructs a new DataPoint2D object with the specified x and y values.
      * 
-     * @param xValue The x-value of the data point.
-     * @param yValue The y-value of the data point.
+     * @param x The x-value of the data point.
+     * @param y The y-value of the data point.
      */
-    public DataPoint2D(double xValue, double yValue) {
-        this.xValue = xValue;
-        this.yValue = yValue;
+    public DataPoint(double x, double y) {
+        this.x = x;
+        this.y = y;
     }
     
     /**
@@ -32,8 +32,8 @@ public class DataPoint2D {
      * 
      * @return The x-value.
      */
-    public double getxValue() {
-        return xValue;
+    public double getX() {
+        return x;
     }
     
     /**
@@ -41,8 +41,8 @@ public class DataPoint2D {
      * 
      * @return The y-value.
      */
-    public double getyValue() {
-        return yValue;
+    public double getY() {
+        return y;
     }
     
     /**
@@ -50,8 +50,8 @@ public class DataPoint2D {
      * 
      * @param xValue The new x-value to set.
      */
-    public void setxValue(double xValue) {
-        this.xValue = xValue;
+    public void setX(double xValue) {
+        this.x = xValue;
     }
     
     /**
@@ -59,8 +59,8 @@ public class DataPoint2D {
      * 
      * @param yValue The new y-value to set.
      */
-    public void setyValue(double yValue) {
-        this.yValue = yValue;
+    public void setY(double yValue) {
+        this.y = yValue;
     }
     
     /**
@@ -70,7 +70,7 @@ public class DataPoint2D {
      */
     @Override
     public String toString() {
-        return xValue + "," + yValue;
+        return x + "," + y;
     }
     
     /**
@@ -79,10 +79,10 @@ public class DataPoint2D {
      * @param dataPoints The list of data points to convert.
      * @return The data points in CSV format.
      */
-    public static String convertPointListToCSV(ArrayList<DataPoint2D> dataPoints) {
+    public static String convertPointListToCSV(ArrayList<DataPoint> dataPoints) {
         StringBuilder csv = new StringBuilder();
         for (int i = 0; i < dataPoints.size(); i++) {
-            csv.append(dataPoints.get(i).getxValue()).append(",").append(dataPoints.get(i).getyValue()).append(";\n");
+            csv.append(dataPoints.get(i).getX()).append(",").append(dataPoints.get(i).getY()).append(";\n");
         }
         return csv.toString();
     }
