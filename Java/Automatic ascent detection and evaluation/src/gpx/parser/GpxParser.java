@@ -19,7 +19,18 @@ import gpx.Track;
 import gpx.TrackPoint;
 import gpx.TrackSegment;
 
+
+/**
+ * The GpxParser class is responsible for parsing GPX files and converting them into Java objects.
+ */
 public class GpxParser {
+    /**
+     * Parses the given GPX file represented by a string path and returns the corresponding GpxData object.
+     *
+     * @param string the path to the GPX file
+     * @return the parsed GpxData object
+     * @throws GpxParseException if there is an error parsing the GPX file
+     */
     public static GpxData parse(String string) throws GpxParseException{
         GpxData data = new GpxData();
         
