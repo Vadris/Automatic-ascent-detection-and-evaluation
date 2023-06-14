@@ -22,23 +22,29 @@ public class ElevationProfile {
      */
     public void smooth(int windowSize) {
         for (int i = 0; i < profile.size() - windowSize; i++) {
+            //Calculates the mean of the elevation values inside the window
             double meanElevation = 0;
             for (int j = 0; j < windowSize; j++) {
                 meanElevation += profile.get(i + j).getyValue();
             }
             meanElevation /= windowSize;
+
+
             for (int j = 0; j < windowSize; j++) {
                 if (profile.get(i + j).getyValue() < meanElevation) {
                     double diff = meanElevation - profile.get(i + j).getyValue();
+
                     profile.get(i + j).setyValue(profile.get(i + j).getyValue() + diff * 0.5);
                 }
                 if (profile.get(i + j).getyValue() > meanElevation) {
                     double diff = profile.get(i + j).getyValue() - meanElevation;
+                    
                     profile.get(i + j).setyValue(profile.get(i + j).getyValue() - diff * 0.5);
                 }
             }
         }
     }
+
     public void filterVertical(double numberOfLines){
         double min = profile.get(0).getxValue();
         double max = profile.get(profile.size() - 1).getxValue();
@@ -69,7 +75,6 @@ public class ElevationProfile {
             else ascending = false;
             if(ascending && !oldAscending){
                 extremalPoints.add(profile.get(i));
-                System.out.println(profile.get(i));
             }
             if(!ascending && oldAscending) extremalPoints.add(profile.get(i));
         }
@@ -92,7 +97,18 @@ public class ElevationProfile {
         //System.out.println(minDistance);
         return maxDistance - minDistance;
     }
-    /**
+
+    public DataPoint2D[] getInterpolationData(){
+        ArrayList<DataPoint2D> extremalPoints = findExtremalPoints();
+        DataPoint2D[] interpolationData = new DataPoint2D[extremalPoints.size() + 2];
+        interpolationData[0] = profile.get(0);
+        for(int i = 1; i <= extremalPoints.size(); i++){
+            interpolationData[i] = extremalPoints.get(i - 1);
+        }
+        interpolationData[extremalPoints.size() + 1] = profile.get(profile.size() - 1);
+        return interpolationData;
+    }
+    /** 
      * Converts the elevation profile to a CSV string.
      *
      * @return The CSV representation of the elevation profile.

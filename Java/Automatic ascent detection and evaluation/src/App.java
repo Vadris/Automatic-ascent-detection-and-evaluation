@@ -20,10 +20,16 @@ public class App {
         CSVSaver.saveFile(profile.toCSV(), "/home/fynn/Documents/Automatic ascent detection and evaluation/Automatic-ascent-detection-and-evaluation/data/csv", 
         "smoothedData4-anders3.csv");
         **/
-        ElevationProfile testProfile = CsvParser.parseCsv("/home/fynn/Documents/Automatic ascent detection and evaluation/Automatic-ascent-detection-and-evaluation/data/csv/raw/raw4.csv");
-        testProfile.filterVertical(500);
-        testProfile.smooth(5);
-        testProfile.findExtremalPoints();
+        CsvParser.parseCsv("/home/fynn/Documents/Automatic ascent detection and evaluation/Automatic-ascent-detection-and-evaluation/data/csv/raw/raw6.csv");
+        DataPoint2D[] interpolDataPoints = new DataPoint2D[4];
+        interpolDataPoints[0] = new DataPoint2D(1, -0.9);
+        interpolDataPoints[1] = new DataPoint2D(2, -2.1);
+        interpolDataPoints[2] = new DataPoint2D(3, -2.5);
+        interpolDataPoints[3] = new DataPoint2D(4, -1.5);
+
+        Polynomial polynomial = new Polynomial(interpolDataPoints);
+        System.out.println(polynomial.toString());
+        
         //CSVSaver.saveFile(testProfile.toCSV(), "/home/fynn/Documents/Automatic ascent detection and evaluation/Automatic-ascent-detection-and-evaluation/data/csv",
         // "filterTest1.csv");
     }

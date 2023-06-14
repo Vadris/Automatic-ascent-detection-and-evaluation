@@ -1,5 +1,6 @@
 package myMath;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Polynomial {
@@ -23,6 +24,20 @@ public class Polynomial {
      */
     public Polynomial(DataPoint2D[] interpolationData) {
         coefficients = calculateCoefficients(interpolationData);
+    }
+
+    /**
+     * Constructs a polynomial using interpolation data points.
+     * Calculates the coefficients for the polynomial using interpolation.
+     *
+     * @param interpolationData The interpolation data points.
+     */
+    public Polynomial(ArrayList<DataPoint2D> interpolationData) {
+        DataPoint2D[] interpolationDataArray = new DataPoint2D[interpolationData.size()];
+        for (int i = 0; i < interpolationData.size(); i++) {
+            interpolationDataArray[i] = interpolationData.get(i);
+        }
+        coefficients = calculateCoefficients(interpolationDataArray);
     }
 
     /**
@@ -62,7 +77,7 @@ public class Polynomial {
         StringBuilder sb = new StringBuilder();
         for (int i = coefficients.length - 1; i >= 2; i--) {
             if (coefficients[i] != 0) {
-                sb.append(coefficients[i]).append("*x").append(i).append("+");
+                sb.append(coefficients[i]).append("*x^").append(i).append("+");
             }
         }
         if (coefficients[1] != 0) {
@@ -96,7 +111,7 @@ public class Polynomial {
         return result;
     }
 
-     /**
+    /**
      * Calculates the coefficients for the interpolation polynomial.
      *
      * @param i                The index of the current interpolation data point.
@@ -144,7 +159,6 @@ public class Polynomial {
         // Optional rounding of coefficients and printing for debugging purposes
         for (int i = polynomial.length - 1; i >= 0; i--) {
             polynomial[i] = round(polynomial[i], 3);
-            System.out.println(polynomial[i] + "*x^" + i);
         }
         return polynomial;
     }
@@ -152,8 +166,8 @@ public class Polynomial {
     /**
      * Rounds the given value to the specified number of decimal places.
      *
-     * @param value   The value to round.
-     * @param places  The number of decimal places to round to.
+     * @param value  The value to round.
+     * @param places The number of decimal places to round to.
      * @return The rounded value.
      */
     public static double round(double value, int places) {
@@ -187,13 +201,20 @@ public class Polynomial {
             xOld = xNew;
             i++;
         }
-        System.out.println(i);
         return xNew;
     }
 
-    public String toCSV(double start, double end, double step){
+    /**
+     * Converts the polynomial to a CSV representation.
+     *
+     * @param start The starting x value.
+     * @param end   The ending x value.
+     * @param step  The step size between x values.
+     * @return The polynomial in CSV format.
+     */
+    public String toCSV(double start, double end, double step) {
         StringBuilder csv = new StringBuilder();
-        for(double current = start; current <= end; current += step){
+        for (double current = start; current <= end; current += step) {
             csv.append(current).append(",").append(eval(current)).append(";\n");
         }
         return csv.toString();
