@@ -15,7 +15,7 @@ def readin_heightprofile_from_csv(filepath:str):
     return Distance, Elevation
 
 filepath1 = 'data/csv/raw/raw5.csv'
-filepath2 = 'data/csv/smoothingTestData/test1.csv'
+filepath2 = 'data/csv/spacingTest/even1.csv'
 filepath3 = 'data/csv/smoothed/smoothed5.csv'
 Distance1,Elevation1 = readin_heightprofile_from_csv(filepath1)
 Distance2,Elevation2 = readin_heightprofile_from_csv(filepath2)
@@ -25,7 +25,7 @@ fig = plt.figure()
 ax = fig.add_subplot()
 plt.plot(Distance1, Elevation1, 'red')
 plt.plot(Distance2, Elevation2, 'green')
-plt.plot(Distance3, Elevation3, 'blue')
+#plt.plot(Distance3, Elevation3, 'blue')
 
 fig.suptitle('Tour de France', fontsize=14, fontweight='bold')
 ax.set_xlabel('Distance')

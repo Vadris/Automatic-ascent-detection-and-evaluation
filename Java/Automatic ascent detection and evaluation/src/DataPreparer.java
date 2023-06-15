@@ -18,7 +18,7 @@ public class DataPreparer {
      */
     public static void main(String[] args) throws GpxParseException, IOException {
         convertRawData();
-        smoothRawData();
+        evenSpacingInRawData();
     }
 
     /**
@@ -57,6 +57,15 @@ public class DataPreparer {
             profile.smooth(50, 1.5);
             profile.smooth(10, 1.7);
             CSVFileWriter.saveDataToCsvFile(profile.toCSV(), "/home/fynn/Documents/Automatic ascent detection and evaluation/Automatic-ascent-detection-and-evaluation/data/csv/smoothed", "smoothed-v2-" + i + ".csv");
+        }
+    }
+
+    public static void evenSpacingInRawData() throws IOException{
+         for(int i = 1; i <= 21; i++){
+            ElevationProfile profile = ElevationDataParser.parseCsvToElevationProfile("/home/fynn/Documents/Automatic ascent detection and evaluation/Automatic-ascent-detection-and-evaluation/data/csv/raw/raw" + i + ".csv");
+            profile.spacePointsEvenly(100);
+            CSVFileWriter.saveDataToCsvFile(profile.toCSV(), "/home/fynn/Documents/Automatic ascent detection and evaluation/Automatic-ascent-detection-and-evaluation/data/csv/spacingTest",
+             "even" + i + ".csv");
         }
     }
 }

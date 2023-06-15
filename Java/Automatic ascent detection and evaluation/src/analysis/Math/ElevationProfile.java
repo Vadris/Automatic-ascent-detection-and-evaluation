@@ -1,6 +1,7 @@
 package analysis.Math;
 
 import java.util.ArrayList;
+import analysis.Math.Util;
 
 public class ElevationProfile {
     private ArrayList<DataPoint> profile = new ArrayList<>();
@@ -34,25 +35,12 @@ public class ElevationProfile {
                 double weight = Math.pow(steepness, 0.02 * distance);
                 
                 if (profile.get(i + j).getY() < meanElevation) {
-                    double difference = meanElevation - profile.get(i + j).getY();
                     profile.get(i + j).setY(profile.get(i + j).getY() + distance * weight);
                 } else if (profile.get(i + j).getY() > meanElevation) {
-                    double difference = profile.get(i + j).getY() - meanElevation;
                     profile.get(i + j).setY(profile.get(i + j).getY() - distance * weight);
                 }
             }
         }
-    }
-
-    public ArrayList<Double> calculateSlope(){
-        ArrayList<Double> slopeValues = new ArrayList<>();
-        for(int i = 0; i < profile.size() - 1; i++){
-            double slope = 
-            round((profile.get(i + 1).getY() - profile.get(i).getY())/(profile.get(i + 1).getX() - profile.get(i).getX()), 2);            
-            if(slopeValues.isEmpty()) slopeValues.add(slope);
-            else if(slopeValues.get(slopeValues.size() - 1) != slope) slopeValues.add(slope);
-        }
-        return slopeValues;
     }
     
     public void filterVertical(double numberOfLines){
@@ -91,33 +79,42 @@ public class ElevationProfile {
         return extremalPoints;
     }
     
-    public int getDataSetSize(){
-        return profile.size();
-    }
-
-    public static double round(double value, int places) {
-        if (places < 0) {
-            throw new IllegalArgumentException();
+    public void removeDuplicatePoints(){
+        for(int i = 0; i < profile.size() - 1; i++){
+            DataPoint currentPoint = profile.get(i);
+            while(currentPoint.isEqual(profile.get(i + 1))){
+                profile.remove(i + 1);
+            }
         }
-
-        long factor = (long) Math.pow(10, places);
-        value = value * factor;
-        long tmp = Math.round(value);
-        return (double) tmp / factor;
     }
     
-    public double getDistanceRange(){
-        double maxDistance = 0;
-        double minDistance = profile.get(1).getX() - profile.get(0).getX();
-        for(int i = 0; i < profile.size() - 1; i++){
-            double curretDistance = profile.get(i + 1).getX() - profile.get(i).getX();
-            if(curretDistance > maxDistance) maxDistance = curretDistance;
-            if(curretDistance < minDistance) minDistance = curretDistance;
-        }
-        //System.out.println(maxDistance);
-        //System.out.println(minDistance);
-        return maxDistance - minDistance;
+    public void spacePointsEvenly(double spacing){
+        ArrayList<DataPoint> evenProfile = new ArrayList<>();
+        //evenProfile.add(profile.get(0));
+        int i = 0;
+        for(double currentXValue = profile.get(0).getX(); currentXValue < profile.get(profile.size() - 1).getX(); currentXValue += spacing){
+            while(currentXValue >= profile.get(i).getX()) i++;
+            evenProfile.add(new DataPoint(currentXValue, evalueateLinearInterpolation(currentXValue, profile.get(i - 1), profile.get(i))));
+        }    
+        profile = evenProfile;
     }
+
+    private double evalueateLinearInterpolation(double xValue, DataPoint point1, DataPoint point2){
+        double m = (point2.getY() - point1.getY())/(point2.getX() - point1.getX());
+        double b = point1.getY() - m * point1.getX();
+        return m*xValue + b;
+    }
+    
+    public void checkPointSpacing(){
+        for(int i = 0; i < profile.size() - 1; i++){
+            System.out.println(profile.get(i + 1).getX() - profile.get(i).getX());
+        }
+    }
+    
+    
+    public int getDataSetSize(){
+        return profile.size();
+    }  
     /** 
     * Converts the elevation profile to a CSV string.
     *

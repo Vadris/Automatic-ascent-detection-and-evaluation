@@ -72,6 +72,10 @@ public class DataPoint {
     public String toString() {
         return x + "," + y;
     }
+
+    public boolean isEqual(DataPoint dataPoint){
+        return x == dataPoint.x && y == dataPoint.y;
+    }
     
     /**
      * Converts a list of data points to CSV format.
