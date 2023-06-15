@@ -1,13 +1,14 @@
 package data;
-import java.io.IOException;
 
 import analysis.Math.DataPoint;
-import analysis.Math.elevation.ElevationProfile;
+import analysis.Math.ElevationProfile;
 import data.gpx.GpxData;
 import data.gpx.parser.GpxParseException;
 import data.gpx.parser.GpxParser;
 import data.io.CSVFileWriter;
 import data.io.ElevationDataParser;
+
+import java.io.IOException;
 
 public class DataPreparer {
     private static final double distanceDataSpacing = 1000; //in metres

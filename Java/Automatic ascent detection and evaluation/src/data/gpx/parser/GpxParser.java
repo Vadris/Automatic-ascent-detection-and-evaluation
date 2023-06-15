@@ -1,23 +1,15 @@
 package data.gpx.parser;
 
-import java.io.File;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.List;
-import java.util.Objects;
-
-import org.jdom.DataConversionException;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.Namespace;
-import org.jdom.input.SAXBuilder;
-
 import data.gpx.GpxData;
 import data.gpx.Track;
 import data.gpx.TrackPoint;
 import data.gpx.TrackSegment;
+import org.jdom.*;
+import org.jdom.input.SAXBuilder;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Objects;
 
 
 /**

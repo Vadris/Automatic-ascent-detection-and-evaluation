@@ -5,20 +5,13 @@ public enum Difficulty {
     Intermediate,
     Advanced,
     Professional;
-
     @Override
     public String toString(){
-        switch (this) {
-            case Beginner:
-                return "Beginner";
-            case Intermediate:
-                return "Intermediate";
-            case Advanced:
-                return "Advanced";
-            case Professional:
-                return "Professional";
-            default:
-                return "";
-        }
+        return switch (this) {
+            case Beginner -> "Beginner";
+            case Intermediate -> "Intermediate";
+            case Advanced -> "Advanced";
+            case Professional -> "Professional";
+        };
     }
 }

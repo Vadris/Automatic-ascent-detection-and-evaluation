@@ -1,8 +1,8 @@
 package data.gpx;
 
-import java.util.ArrayList;
-
 import analysis.Math.DataPoint;
+
+import java.util.ArrayList;
 
 /**
  * Represents a GPX track segment as a list of coordinates in polar form.
