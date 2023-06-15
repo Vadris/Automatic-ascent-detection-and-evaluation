@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import analysis.Math.DataPoint;
-import analysis.Math.ElevationProfile;
+import analysis.Math.elevation.ElevationProfile;
 
 public class ElevationDataParser {
     /**

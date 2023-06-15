@@ -1,7 +1,11 @@
-package analysis.Math;
+package analysis.Math.elevation;
 
 import java.util.ArrayList;
-import analysis.Math.Util;
+
+import analysis.Math.DataPoint;
+import analysis.Math.Utils;
+import analysis.Math.slopes.SlopeData;
+import analysis.Math.slopes.SlopeSegment;
 
 public class ElevationProfile {
     private ArrayList<DataPoint> profile = new ArrayList<>();
@@ -43,6 +47,7 @@ public class ElevationProfile {
         }
     }
     
+    /**
     public ArrayList<DataPoint> findExtremalPoints(){
         ArrayList<DataPoint> extremalPoints = new ArrayList<>();
         boolean ascending = true;
@@ -61,6 +66,7 @@ public class ElevationProfile {
         }
         return extremalPoints;
     }
+    **/
     
     public void removeUnnecessaryDataPoints(){
         for(int i = 0; i < profile.size() - 2; i++){
@@ -108,14 +114,14 @@ public class ElevationProfile {
     public SlopeData calculateSlopeData(){
         SlopeData slopeData = new SlopeData();
         for(int i = 1; i < profile.size() - 1; i++){
-            double currentSlope = Util.round((profile.get(i).getY() - profile.get(i - 1).getY()), 2)  /
-            Util.round((profile.get(i).getX() - profile.get(i - 1).getX())/1000,  2);
+            double currentSlope = Utils.round((profile.get(i).getY() - profile.get(i - 1).getY()), 2)  /
+            Utils.round((profile.get(i).getX() - profile.get(i - 1).getX())/1000,  2);
             
-            double nextSlope = Util.round((profile.get(i + 1).getY() - profile.get(i).getY()), 2) /
-            Util.round((profile.get(i + 1).getX() - profile.get(i).getX())/1000, 2);
+            double nextSlope = Utils.round((profile.get(i + 1).getY() - profile.get(i).getY()), 2) /
+            Utils.round((profile.get(i + 1).getX() - profile.get(i).getX())/1000, 2);
             
             double slopeLength = profile.get(i + 1).getX() - profile.get(i).getX();
-            while(Util.isApproxEqual(currentSlope, nextSlope, 2) && i < profile.size() - 1){
+            while(Utils.isApproxEqual(currentSlope, nextSlope, 2) && i < profile.size() - 1){
                 slopeLength += profile.get(i + 1).getX() - profile.get(i).getX();
                 i++;
             }

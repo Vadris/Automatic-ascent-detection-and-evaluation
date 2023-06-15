@@ -1,4 +1,4 @@
-package analysis.Math;
+package analysis.Math.slopes;
 
 import java.util.ArrayList;
 

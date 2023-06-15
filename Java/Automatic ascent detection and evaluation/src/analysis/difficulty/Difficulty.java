@@ -1,4 +1,4 @@
-package analysis;
+package analysis.difficulty;
 
 public enum Difficulty {
     Beginner,

@@ -1,7 +1,8 @@
+package data;
 import java.io.IOException;
 
 import analysis.Math.DataPoint;
-import analysis.Math.ElevationProfile;
+import analysis.Math.elevation.ElevationProfile;
 import data.gpx.GpxData;
 import data.gpx.parser.GpxParseException;
 import data.gpx.parser.GpxParser;
