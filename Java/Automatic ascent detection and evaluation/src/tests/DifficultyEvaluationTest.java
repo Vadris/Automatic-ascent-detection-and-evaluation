@@ -1,6 +1,7 @@
 package tests;
 
 import analysis.Math.ElevationProfile;
+import analysis.Math.Utils;
 import analysis.difficulty.DifficultyRater;
 import data.io.ElevationDataParser;
 
@@ -23,10 +24,13 @@ public class DifficultyEvaluationTest {
             ElevationProfile profile = ElevationDataParser.parseCsvToElevationProfile(
                     "/home/fynn/Documents/Automatic ascent detection and evaluation/Automatic-ascent-detection-and-evaluation/data/csv/smoothed/smoothed-v3-" + i + ".csv");
 
-            System.out.println("Etappe " + i + ": ");
+            System.out.println("Stage  " + i + ": ");
             // Calculate the slope data and rate the difficulty of the track
             System.out.println(DifficultyRater.rateDifficulty(profile.calculateSlopeData(), profile.getTrackLength()));
             System.out.println("Total distance: " + profile.getTrackLength() / 1000 + "km");
+            System.out.println("Height difference: " + Utils.round(profile.getHeightDiffrence(), 2));
+            System.out.println("Steepest Slope: " + Utils.round(profile.calculateSlopeData().getSteepestSlope(), 2));
+            System.out.println("Total Ascending Distance: " + Utils.round(profile.calculateSlopeData().getTotalAscendingDistance(), 2));
             System.out.println("___________________________________________________________________________________________________");
         }
     }

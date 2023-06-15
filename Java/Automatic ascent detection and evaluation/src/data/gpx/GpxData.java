@@ -10,9 +10,6 @@ import java.util.ArrayList;
  * <p>The GpxData class holds information about the date and time of the recorded tracks and provides methods
  * to add tracks, retrieve the date, time, and tracks, unify multiple tracks into a single track,
  * smooth the tracks (to be implemented), and convert a track to CSV format.</p>
- * 
- * <p>Version: 1.1</p>
- * <p>Author: Fynn Jansen</p>
  */
 public class GpxData {
     private LocalDate date;

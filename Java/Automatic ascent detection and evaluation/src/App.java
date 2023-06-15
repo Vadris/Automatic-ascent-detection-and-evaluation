@@ -1,8 +1,4 @@
-import org.w3c.dom.css.CSSValue;
-
 import analysis.Math.ElevationProfile;
-import analysis.Math.slopes.SlopeData;
-import analysis.difficulty.DifficultyRater;
 import data.gpx.parser.GpxParseException;
 import data.io.CSVFileWriter;
 import data.io.ElevationDataParser;

@@ -10,9 +10,6 @@ import java.util.ArrayList;
  * <p>A track consists of multiple track segments, each representing a continuous section of the GPX track. This class provides
  * methods to add track segments, retrieve the track segments, unify the track segments, append another track's segments,
  * convert the track points to CSV format, calculate the total distance of the track, and generate distance vs. height values.</p>
- * 
- * <p>Version: 1.1</p>
- * <p>Author: Fynn Jansen</p>
  */
 public class Track {
     private ArrayList<TrackSegment> trackSegments = new ArrayList<>();

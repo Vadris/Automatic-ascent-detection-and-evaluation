@@ -50,6 +50,22 @@ public class SlopeData {
         }
     }
 
+    public double getSteepestSlope(){
+        double steepestSlope = 0;
+        for(int i = 0; i < slopeSegments.size(); i++){
+            if(slopeSegments.get(i).getSlope() > steepestSlope) steepestSlope = slopeSegments.get(i).getSlope();
+        }
+        return steepestSlope;
+    }
+
+    public double getTotalAscendingDistance(){
+        double totalAscendingDistance = 0;
+        for(int i = 0; i < slopeSegments.size(); i++){
+            if(slopeSegments.get(i).getSlope() > 0)  totalAscendingDistance += slopeSegments.get(i).getLength();
+        }
+        return totalAscendingDistance;
+    }
+
     /**
      * Converts the slope data to a CSV string.
      *

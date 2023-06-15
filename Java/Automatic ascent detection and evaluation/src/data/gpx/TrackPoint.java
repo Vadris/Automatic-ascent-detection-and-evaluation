@@ -5,9 +5,6 @@ package data.gpx;
  * 
  * <p>This class provides information about a specific point on a track. It includes latitude, longitude, and elevation 
  * data, and provides methods to access and calculate distances between points.</p>
- * 
- * <p>Version: 1.1</p>
- * <p>Author: Fynn Jansen</p>
  */
 public class TrackPoint {
     private final static double earthRadius = 6317000; // Earth radius in meters

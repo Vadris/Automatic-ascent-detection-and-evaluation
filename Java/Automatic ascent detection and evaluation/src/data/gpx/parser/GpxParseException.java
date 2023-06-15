@@ -5,9 +5,6 @@ package data.gpx.parser;
  * 
  * <p>The GpxParseException class is a custom exception class that extends Throwable.
  * It is used to handle exceptions that occur during GPX parsing and provides a custom error message.</p>
- * 
- * <p>Version: 1.0</p>
- * <p>Author: [Your Name]</p>
  */
 public class GpxParseException extends Throwable {
     

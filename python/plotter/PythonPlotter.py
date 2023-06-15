@@ -19,7 +19,7 @@ def readin_heightprofile_from_csv(filepath:str):
 #filepath2 = 'data/csv/smoothingTestData/test2.csv'
 filepath3 = 'data/csv/smoothed/smoothed5.csv'
 
-filepath1 = 'data/csv/raw/raw4.csv'
+filepath1 = 'data/csv/raw/raw21.csv'
 filepath2 = 'data/csv/smoothingTestData/vertical-intersect-linear-interpolation.csv'
 
 Distance1,Elevation1 = readin_heightprofile_from_csv(filepath1)
@@ -29,7 +29,7 @@ Distance3, Elevation3 = readin_heightprofile_from_csv(filepath3)
 fig = plt.figure()
 ax = fig.add_subplot()
 plt.plot(Distance1, Elevation1, 'red')
-plt.plot(Distance2, Elevation2, 'green')
+#plt.plot(Distance2, Elevation2, 'green')
 #plt.plot(Distance3, Elevation3, 'blue')
 
 fig.suptitle('Tour de France', fontsize=14, fontweight='bold')

@@ -52,7 +52,6 @@ public class DataPreparer {
 
     /**
      * Smooths the raw data.
-     *
      * This method applies a smoothing algorithm to the raw data.
      * @throws IOException
      */

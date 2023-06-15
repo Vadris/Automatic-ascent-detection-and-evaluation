@@ -81,7 +81,16 @@ public class ElevationProfile {
                 i = 0;
             }
         }
+    }
 
+    public double getHeightDiffrence(){
+        double min = profile.get(0).getY();
+        double max = profile.get(0).getY();
+        for(int i = 0; i < profile.size(); i++){
+            if(profile.get(i).getY() > max) max = profile.get(i).getY();
+            if(profile.get(i).getY() < min) min = profile.get(i).getY();
+        }
+        return max - min;
     }
 
     /**

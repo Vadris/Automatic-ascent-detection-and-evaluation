@@ -8,9 +8,7 @@ import java.util.ArrayList;
  * <p>The DataPoint2D class represents a data point in a two-dimensional space,
  * with an x-value and a y-value. It provides methods to retrieve and modify the
  * x and y values, as well as converting a list of data points to CSV format.</p>
- * 
- * <p>Version: 1.0</p>
- * <p>Author: [Your Name]</p>
+ *
  */
 public class DataPoint {
     private double x;
