@@ -107,21 +107,25 @@ public class ElevationProfile {
 
     public SlopeData calculateSlopeData(){
         SlopeData slopeData = new SlopeData();
-        for(int i = 1; i < profile.size(); i++){
-            double currentSlope = Util.round((profile.get(i).getY() - profile.get(i - 1).getY())  /
-            (profile.get(i).getX() - profile.get(i - 1).getX()), 2);
+        for(int i = 1; i < profile.size() - 1; i++){
+            double currentSlope = Util.round((profile.get(i).getY() - profile.get(i - 1).getY()), 2)  /
+            Util.round((profile.get(i).getX() - profile.get(i - 1).getX())/1000,  2);
             
-            double nextSlope = Util.round((profile.get(i + 1).getY() - profile.get(i).getY()) /
-            (profile.get(i + 1).getX() - profile.get(i).getX()), 2);
+            double nextSlope = Util.round((profile.get(i + 1).getY() - profile.get(i).getY()), 2) /
+            Util.round((profile.get(i + 1).getX() - profile.get(i).getX())/1000, 2);
             
-            double slopeLength = profile.get(i + 1).getX() - profile.get(i ).getX();
-            while(Util.isApproxEqual(currentSlope, nextSlope, 2)){
+            double slopeLength = profile.get(i + 1).getX() - profile.get(i).getX();
+            while(Util.isApproxEqual(currentSlope, nextSlope, 2) && i < profile.size() - 1){
                 slopeLength += profile.get(i + 1).getX() - profile.get(i).getX();
                 i++;
             }
             slopeData.addSlopeSegment(new SlopeSegment(currentSlope, slopeLength));
         }
         return slopeData;
+    }
+
+    public double getTrackLength(){
+        return profile.get(profile.size() - 1).getX();
     }
 
 
