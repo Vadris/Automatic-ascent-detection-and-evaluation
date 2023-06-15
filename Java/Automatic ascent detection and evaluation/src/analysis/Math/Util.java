@@ -12,7 +12,7 @@ public class Util {
         return (double) tmp / factor;
     }
 
-    public boolean isApproxEqual(double a, double b, int places){
+    public static boolean isApproxEqual(double a, double b, int places){
         return round(a, places) == round(b, places);
     }
 }

@@ -32,7 +32,7 @@ public class ElevationProfile {
             
             for (int j = 0; j < windowSize; j++) {
                 double distance = Math.abs(profile.get(i + j).getY() - meanElevation);
-                double weight = Math.pow(steepness, 0.02 * distance);
+                double weight = Math.pow(steepness, -distance);
                 
                 if (profile.get(i + j).getY() < meanElevation) {
                     profile.get(i + j).setY(profile.get(i + j).getY() + distance * weight);
@@ -41,23 +41,6 @@ public class ElevationProfile {
                 }
             }
         }
-    }
-    
-    public void filterVertical(double numberOfLines){
-        double min = profile.get(0).getX();
-        double max = profile.get(profile.size() - 1).getX();
-        double range = max - min;
-        ArrayList<DataPoint> intersects = new ArrayList<>();
-        
-        int j = 0;
-        for(int i = 0; i < numberOfLines; i++){
-            double currentXValue = min + i * (range/numberOfLines);
-            while(profile.get(j).getX() < currentXValue){
-                j++;
-            }
-            intersects.add(profile.get(j));
-        }
-        profile = intersects;
     }
     
     public ArrayList<DataPoint> findExtremalPoints(){
@@ -79,39 +62,69 @@ public class ElevationProfile {
         return extremalPoints;
     }
     
-    public void removeDuplicatePoints(){
-        for(int i = 0; i < profile.size() - 1; i++){
+    public void removeUnnecessaryDataPoints(){
+        for(int i = 0; i < profile.size() - 2; i++){
             DataPoint currentPoint = profile.get(i);
-            while(currentPoint.isEqual(profile.get(i + 1))){
+            //Removes duplicate data points
+            while(currentPoint.isEqual(profile.get(i + 1))){ 
                 profile.remove(i + 1);
+                i= 0;
+            };
+            //Removes 
+            while(currentPoint.getY() == profile.get(i + 1).getY() && currentPoint.getY() == profile.get(i + 2).getY()){ 
+                profile.remove(i + 1);
+                i = 0;
+            }
+            //Combines datapoints with the same x values but diffrence y values by avraging the y values of the points
+            if(currentPoint.getX() == profile.get(i + 1).getX()){
+                double yValueAevrage = currentPoint.getY();
+                int numberOfAvragingPoints = 1;
+                while(currentPoint.getX() == profile.get(i + 1).getX()){
+                    yValueAevrage += profile.get(i + 1).getY();
+                    profile.remove(i + 1);
+                    numberOfAvragingPoints++;
+                }
+                yValueAevrage /= numberOfAvragingPoints;
+                profile.get(i).setY(yValueAevrage);
+                i = 0;
             }
         }
+        
     }
     
     public void spacePointsEvenly(double spacing){
-        ArrayList<DataPoint> evenProfile = new ArrayList<>();
-        //evenProfile.add(profile.get(0));
+        ArrayList<DataPoint> evenProfile = new ArrayList<>();;
         int i = 0;
         for(double currentXValue = profile.get(0).getX(); currentXValue < profile.get(profile.size() - 1).getX(); currentXValue += spacing){
             while(currentXValue >= profile.get(i).getX()) i++;
-            evenProfile.add(new DataPoint(currentXValue, evalueateLinearInterpolation(currentXValue, profile.get(i - 1), profile.get(i))));
+            double m = (profile.get(i).getY() - profile.get(i - 1).getY())/(profile.get(i).getX() - profile.get(i - 1).getX());
+            double b = profile.get(i - 1).getY() - m * profile.get(i - 1).getX();
+        
+            evenProfile.add(new DataPoint(currentXValue, m * currentXValue + b));
         }    
         profile = evenProfile;
     }
 
-    private double evalueateLinearInterpolation(double xValue, DataPoint point1, DataPoint point2){
-        double m = (point2.getY() - point1.getY())/(point2.getX() - point1.getX());
-        double b = point1.getY() - m * point1.getX();
-        return m*xValue + b;
-    }
-    
-    public void checkPointSpacing(){
-        for(int i = 0; i < profile.size() - 1; i++){
-            System.out.println(profile.get(i + 1).getX() - profile.get(i).getX());
+    public SlopeData calculateSlopeData(){
+        SlopeData slopeData = new SlopeData();
+        for(int i = 1; i < profile.size(); i++){
+            double currentSlope = Util.round((profile.get(i).getY() - profile.get(i - 1).getY())  /
+            (profile.get(i).getX() - profile.get(i - 1).getX()), 2);
+            
+            double nextSlope = Util.round((profile.get(i + 1).getY() - profile.get(i).getY()) /
+            (profile.get(i + 1).getX() - profile.get(i).getX()), 2);
+            
+            double slopeLength = profile.get(i + 1).getX() - profile.get(i ).getX();
+            while(Util.isApproxEqual(currentSlope, nextSlope, 2)){
+                slopeLength += profile.get(i + 1).getX() - profile.get(i).getX();
+                i++;
+            }
+            slopeData.addSlopeSegment(new SlopeSegment(currentSlope, slopeLength));
         }
+        return slopeData;
     }
-    
-    
+
+
     public int getDataSetSize(){
         return profile.size();
     }  

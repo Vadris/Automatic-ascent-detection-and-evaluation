@@ -9,16 +9,19 @@ import data.io.CSVFileWriter;
 import data.io.ElevationDataParser;
 
 public class DataPreparer {
+    private static final double distanceDataSpacing = 1000; //in metres
+    private static final int averagingWindowSize = 10; 
+    private static final double averagingSteepness = 1.7;
+    
     /**
-     * Entry point of the application.
-     *
+     * 
      * @param args The command line arguments.
      * @throws GpxParseException If an error occurs while parsing the GPX data.
      * @throws IOException
      */
     public static void main(String[] args) throws GpxParseException, IOException {
         convertRawData();
-        evenSpacingInRawData();
+        smoothRawData();
     }
 
     /**
@@ -54,18 +57,10 @@ public class DataPreparer {
     public static void smoothRawData() throws IOException {
         for(int i = 1; i <= 21; i++){
             ElevationProfile profile = ElevationDataParser.parseCsvToElevationProfile("/home/fynn/Documents/Automatic ascent detection and evaluation/Automatic-ascent-detection-and-evaluation/data/csv/raw/raw" + i + ".csv");
-            profile.smooth(50, 1.5);
-            profile.smooth(10, 1.7);
-            CSVFileWriter.saveDataToCsvFile(profile.toCSV(), "/home/fynn/Documents/Automatic ascent detection and evaluation/Automatic-ascent-detection-and-evaluation/data/csv/smoothed", "smoothed-v2-" + i + ".csv");
-        }
-    }
-
-    public static void evenSpacingInRawData() throws IOException{
-         for(int i = 1; i <= 21; i++){
-            ElevationProfile profile = ElevationDataParser.parseCsvToElevationProfile("/home/fynn/Documents/Automatic ascent detection and evaluation/Automatic-ascent-detection-and-evaluation/data/csv/raw/raw" + i + ".csv");
-            profile.spacePointsEvenly(100);
-            CSVFileWriter.saveDataToCsvFile(profile.toCSV(), "/home/fynn/Documents/Automatic ascent detection and evaluation/Automatic-ascent-detection-and-evaluation/data/csv/spacingTest",
-             "even" + i + ".csv");
+            profile.removeUnnecessaryDataPoints();
+            profile.spacePointsEvenly(distanceDataSpacing);
+            profile.smooth(averagingWindowSize, averagingSteepness);
+            CSVFileWriter.saveDataToCsvFile(profile.toCSV(), "/home/fynn/Documents/Automatic ascent detection and evaluation/Automatic-ascent-detection-and-evaluation/data/csv/smoothed", "smoothed-v3-" + i + ".csv");
         }
     }
 }

@@ -14,9 +14,14 @@ def readin_heightprofile_from_csv(filepath:str):
             
     return Distance, Elevation
 
-filepath1 = 'data/csv/raw/raw5.csv'
-filepath2 = 'data/csv/spacingTest/even1.csv'
+#filepath1 = 'data/csv/raw/raw9.csv'
+#filepath1 = 'data/csv/smoothingTestData/test2a.csv'
+#filepath2 = 'data/csv/smoothingTestData/test2.csv'
 filepath3 = 'data/csv/smoothed/smoothed5.csv'
+
+filepath1 = 'data/csv/raw/raw3.csv'
+filepath2 = 'data/csv/smoothed/smoothed-v3-3.csv'
+
 Distance1,Elevation1 = readin_heightprofile_from_csv(filepath1)
 Distance2,Elevation2 = readin_heightprofile_from_csv(filepath2)
 Distance3, Elevation3 = readin_heightprofile_from_csv(filepath3)
